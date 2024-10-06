@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MfaDemo.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.SomeAction">
+            <summary>
+            測試用的
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
