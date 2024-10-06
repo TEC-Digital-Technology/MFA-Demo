@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MfaDemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="TotpSecretKey" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedDateTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SmtpMfaRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AccountID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VerifyCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CodeStatus" Type="tinyint" Nullable="false" />
+          <Property Name="ExpiryDateTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SmtpMfaRecord_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="SmtpMfaRecord" Type="Self.SmtpMfaRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SmtpMfaRecord">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MfaDemoModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SmtpMfaRecord" EntityType="Self.SmtpMfaRecord" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SmtpMfaRecord_Account" Association="Self.FK_SmtpMfaRecord_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="SmtpMfaRecord" EntitySet="SmtpMfaRecord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MfaDemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotpSecretKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="SmtpMfaRecord" Relationship="MfaDemoModel.FK_SmtpMfaRecord_Account" FromRole="Account" ToRole="SmtpMfaRecord" />
+        </EntityType>
+        <EntityContainer Name="MfaDemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="SmtpMfaRecord" EntityType="MfaDemoModel.SmtpMfaRecord" />
+          <AssociationSet Name="FK_SmtpMfaRecord_Account" Association="MfaDemoModel.FK_SmtpMfaRecord_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="SmtpMfaRecord" EntitySet="SmtpMfaRecord" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="SmtpMfaRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="AccountID" Type="Guid" Nullable="false" />
+          <Property Name="VerifyCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CodeStatus" Type="Byte" Nullable="false" />
+          <Property Name="ExpiryDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="CreatedDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Account" Relationship="MfaDemoModel.FK_SmtpMfaRecord_Account" FromRole="SmtpMfaRecord" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_SmtpMfaRecord_Account">
+          <End Type="MfaDemoModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="MfaDemoModel.SmtpMfaRecord" Role="SmtpMfaRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SmtpMfaRecord">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MfaDemoModelStoreContainer" CdmEntityContainer="MfaDemoEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="MfaDemoModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="TotpSecretKey" ColumnName="TotpSecretKey" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SmtpMfaRecord">
+            <EntityTypeMapping TypeName="MfaDemoModel.SmtpMfaRecord">
+              <MappingFragment StoreEntitySet="SmtpMfaRecord">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ExpiryDateTime" ColumnName="ExpiryDateTime" />
+                <ScalarProperty Name="CodeStatus" ColumnName="CodeStatus" />
+                <ScalarProperty Name="VerifyCode" ColumnName="VerifyCode" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
