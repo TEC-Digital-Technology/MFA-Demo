@@ -1,0 +1,6 @@
+[submodule "Submodules/Otp.NET"]
+	path = Submodules/Otp.NET
+	url = https://github.com/kspearrin/Otp.NET.git
+[submodule "Submodules/QRCoder"]
+	path = Submodules/QRCoder
+	url = https://github.com/codebude/QRCoder.git

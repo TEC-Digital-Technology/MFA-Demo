@@ -45,6 +45,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Submodules\Otp.NET\src\Otp.NET\Otp.NET.csproj">
+      <Project>{73c64c7f-9efb-4e8b-a008-68b948c80d02}</Project>
+      <Name>Otp.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Submodules\QRCoder\QRCoder\QRCoder.csproj">
+      <Project>{1cf5aa6a-1eac-457b-bd77-9251c2140437}</Project>
+      <Name>QRCoder</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MfaDemo.Adapter\MfaDemo.Adapter.csproj">
       <Project>{5aec0d25-c271-4de7-82a0-ba3ae10af379}</Project>
       <Name>MfaDemo.Adapter</Name>
