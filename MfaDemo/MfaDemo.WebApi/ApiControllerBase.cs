@@ -36,6 +36,12 @@ namespace MfaDemo.WebApi
                 case "1001":
                     message = "帳號已存在";
                     break;
+                case "1002":
+                    message = "帳號或密碼錯誤";
+                    break;
+                case "1003":
+                    message = "驗證碼錯誤";
+                    break;
                 default:
                     throw new NotImplementedException($"尚未實作代號「{code}」對應的訊息({nameof(message)})。");
             }

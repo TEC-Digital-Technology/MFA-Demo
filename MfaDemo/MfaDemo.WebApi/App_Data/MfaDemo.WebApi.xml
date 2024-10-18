@@ -43,5 +43,28 @@
             <param name="email">信箱</param>
             <returns></returns>
         </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.AuthenticateUser(System.String,System.String)">
+            <summary>
+            驗證使用者帳號及密碼
+            </summary>
+            <param name="username">帳號</param>
+            <param name="password">密碼</param>
+            <returns></returns>
+        </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.SendSmtpOtp(System.Guid)">
+            <summary>
+            發送信件 OTP 驗證碼
+            </summary>
+            <param name="accountId">帳號 ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.ValidateSmtpOtp(System.Guid,System.String)">
+            <summary>
+            檢查信件 OTP 驗證碼
+            </summary>
+            <param name="accountId">帳號 ID</param>
+            <param name="otpCode">OTP</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
