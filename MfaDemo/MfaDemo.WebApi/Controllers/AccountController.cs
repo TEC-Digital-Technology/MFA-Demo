@@ -44,7 +44,13 @@ namespace MfaDemo.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AuthenticateUser(string username, string password)
         {
-            return base.GenerateResponse();
+            AccountUIData accountUIData = new AccountUIData();
+            var accountInfo = await accountUIData.GetAccountAsync(username);
+            if (accountInfo == null || String.Compare(accountInfo.Password, password) != 0)
+            {
+                return base.GenerateResponse("1002");
+            }
+            return base.GenerateResponse(("AccountId", accountInfo.Id.ToString()));
         }
 
         /// <summary>
@@ -55,6 +61,33 @@ namespace MfaDemo.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> SendSmtpOtp(Guid accountId)
         {
+            SmtpMfaUIData smtpMfaUIData = new SmtpMfaUIData();
+            AccountUIData accountUIData = new AccountUIData();
+            var accountInfo = await accountUIData.GetAccountAsync(accountId);
+            await smtpMfaUIData.AddMfaRecordAsync(accountId, 180);
+            var smtpRecodrd = await smtpMfaUIData.GetLastestRecordAsync(accountId);
+            using (SmtpClient smtpClient = new SmtpClient("localhost", 25))
+            {
+                smtpClient.Credentials = new NetworkCredential("NoReplyExample", "aY0zwE_8MiRw");
+                smtpClient.Send("NoReply@example.com", accountInfo.Email, "Verify Your Account", $"Please verify your account by the code \"{smtpRecodrd.VerifyCode}\"");
+            }
+            return base.GenerateResponse();
+        }
+
+        /// <summary>
+        /// 檢查信件 OTP 驗證碼
+        /// </summary>
+        /// <param name="accountId">帳號 ID</param>
+        /// <param name="otpCode">OTP</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<HttpResponseMessage> ValidateSmtpOtp(Guid accountId, string otpCode)
+        {
+            SmtpMfaUIData smtpMfaUIData = new SmtpMfaUIData();
+            if (!await smtpMfaUIData.ValidateAsync(accountId, otpCode))
+            {
+                return base.GenerateResponse("1003");
+            }
             return base.GenerateResponse();
         }
     }
