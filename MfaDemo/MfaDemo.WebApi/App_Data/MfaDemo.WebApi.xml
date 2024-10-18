@@ -4,10 +4,43 @@
         <name>MfaDemo.WebApi</name>
     </assembly>
     <members>
-        <member name="M:MfaDemo.WebApi.Controllers.AccountController.SomeAction">
+        <member name="T:MfaDemo.WebApi.ApiControllerBase">
             <summary>
-            測試用的
+            API 控制器基底型別
             </summary>
+        </member>
+        <member name="M:MfaDemo.WebApi.ApiControllerBase.#ctor">
+            <summary>
+            初始化 API 控制器的基底型別
+            </summary>
+        </member>
+        <member name="M:MfaDemo.WebApi.ApiControllerBase.GenerateResponse(System.String,System.ValueTuple{System.String,System.String}[])">
+            <summary>
+            建立回應物件
+            </summary>
+            <param name="code">回傳代號</param>
+            <param name="additionalProperties">附加屬性集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:MfaDemo.WebApi.ApiControllerBase.GenerateResponse(System.ValueTuple{System.String,System.String}[])">
+            <summary>
+            建立處理成功( code = 0000 )的回應物件
+            </summary>
+            <param name="additionalProperties">附加屬性集合</param>
+            <returns></returns>
+        </member>
+        <member name="T:MfaDemo.WebApi.Controllers.AccountController">
+            <summary>
+            帳號控制器
+            </summary>
+        </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.AddUser(System.String,System.String,System.String)">
+            <summary>
+            新增使用者
+            </summary>
+            <param name="username">帳號</param>
+            <param name="password">密碼</param>
+            <param name="email">信箱</param>
             <returns></returns>
         </member>
     </members>
