@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Service login form Responsive Widget Template</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+
+</head>
+
+<body>
+    <div class="signinform">
+        <h1>MFA Demo</h1>
+        <!-- container -->
+        <div class="container">
+            <div class="w3l-form-info" id="login">
+                <div class="w3_info">
+                    <h2>Login</h2>
+                    <div class="input-group">
+                        <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                        <input type="text" placeholder="Username" required="" id="usernameInput">
+                    </div>
+                    <div class="input-group">
+                        <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                        <input type="Password" placeholder="Password" id="passwordInput" required="">
+                    </div>
+                    <div class="form-row bottom">
+                        <div class="form-check">
+                            <input type="checkbox" id="remenber" name="remenber" value="remenber">
+                            <label for="remenber"> Remember me?</label>
+                        </div>
+                        <a href="#url" class="forgot">Forgot password?</a>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button" id="loginBtn">Login</button>
+                    <p class="account">Don't have an account? <a href="#signup">Sign up</a></p>
+                </div>
+            </div>
+
+            <div class="w3l-form-info" id="otp" style="display: none;">
+                <div class="w3_info">
+                    <h2>Two-Factor Authentication</h2>
+                    <h3 id="mfaMessage"></h3>
+                    <div class="input-group">
+                        <input type="text"
+                            inputmode="numeric"
+                            autocomplete="one-time-code"
+                            maxlength="6"
+                            id="otpInput"
+                            required>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button" id="otpSubmitBtn">Submit</button>
+                    <p id="otpMessage" style="display: none;"><br/> 收不到驗證碼嗎? 試試使用<a href="javascript:void(0);" id="useAuthenticatorBtn">Authenticator</a></p>
+                </div>
+            </div>
+        </div>
+        <!-- //container -->
+        <!-- footer -->
+        <div class="footer">
+            <p>&copy; 2024 MFA Demo. All Rights Reserved</p>
+        </div>
+        <!-- footer -->
+    </div>
+
+    <!-- fontawesome v5-->
+    <script src="js/fontawesome.js"></script>
+    <script src="js/loginPageControl.js"></script>
+</body>
+</html>
