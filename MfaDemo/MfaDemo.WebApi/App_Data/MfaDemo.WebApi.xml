@@ -66,5 +66,20 @@
             <param name="otpCode">OTP</param>
             <returns></returns>
         </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.CreateTotpQrCode(System.Guid)">
+            <summary>
+            建立 Totp 的 QR Code
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MfaDemo.WebApi.Controllers.AccountController.ValidateTotp(System.Guid,System.String)">
+            <summary>
+            驗證 OTP
+            </summary>
+            <param name="accountId">使用者 ID</param>
+            <param name="otp">OTP</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

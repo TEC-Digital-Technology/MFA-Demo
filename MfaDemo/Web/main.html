@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Service login form Responsive Widget Template</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+</head>
+
+<body>
+    <div class="signinform">
+        <h1>MFA Demo</h1>
+        <!-- container -->
+        <div class="container">
+            <div class="w3l-form-info" id="mainPage">
+                <div class="w3_info">
+                    <h3>歡迎使用MFA Demo</h3>
+                    <img src="img/Patric.jpg" alt="MFA Demo">
+                    <div id="bindAuthenticatorMessage" style="display: none;">還沒綁定 Authenticator 嗎? 請點擊<a href="javascript:void(0);" id="bindAuthenticatorBtn">綁定</a></div>
+                    <button class="btn btn-primary btn-block" type="button" id="logoutBtn">登出</button>
+                </div>
+            </div>
+            <div class="w3l-form-info" id="bindAuthenticator" style="display: none;">
+                <div class="w3_info">
+                    <h3>綁定Authenticator</h3>
+                    <img src="" alt="QR Code" id="qrCodeImg">
+                    <p id="otpMessage">請在Authenticator掃描QR Code，並且輸入 6 位數的驗證碼</p>
+                    <div class="input-group">
+                        <input type="text"
+                            inputmode="numeric"
+                            autocomplete="one-time-code"
+                            maxlength="6"
+                            id="otpInput"
+                            required>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button" id="activeAuthenticatorBtn">綁定</button>
+                </div>
+            </div>
+        </div>
+        <!-- //container -->
+        <!-- footer -->
+        <div class="footer">
+            <p>&copy; 2024 MFA Demo. All Rights Reserved</p>
+        </div>
+        <!-- footer -->
+    </div>
+    <!-- fontawesome v5-->
+    <script src="js/fontawesome.js"></script>
+    <script src="js/mainPageControl.js"></script>
+</body>
+
+</html>

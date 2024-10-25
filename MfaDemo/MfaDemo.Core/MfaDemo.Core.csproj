@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIData\AccountUIData.cs" />
     <Compile Include="UIData\SmtpMfaUIData.cs" />
+    <Compile Include="UIData\TotpMfaUIData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Submodules\Otp.NET\src\Otp.NET\Otp.NET.csproj">

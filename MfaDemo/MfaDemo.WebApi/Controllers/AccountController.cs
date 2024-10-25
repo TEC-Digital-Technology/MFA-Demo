@@ -1,7 +1,10 @@
 ﻿using MfaDemo.Core.UIData;
 using Newtonsoft.Json;
+using OtpNet;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -50,7 +53,8 @@ namespace MfaDemo.WebApi.Controllers
             {
                 return base.GenerateResponse("1002");
             }
-            return base.GenerateResponse(("AccountId", accountInfo.Id.ToString()));
+            bool isAuthenticatorEnabled = !String.IsNullOrEmpty(accountInfo.TotpSecretKey);
+            return base.GenerateResponse(("AccountId", accountInfo.Id.ToString()), ("IsAuthenticatorEnabled", isAuthenticatorEnabled.ToString()));
         }
 
         /// <summary>
@@ -88,6 +92,40 @@ namespace MfaDemo.WebApi.Controllers
             {
                 return base.GenerateResponse("1003");
             }
+            return base.GenerateResponse();
+        }
+
+        /// <summary>
+        /// 建立 Totp 的 QR Code
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<HttpResponseMessage> CreateTotpQrCode(Guid accountId) 
+        {
+            TotpMfaUIData totpMfaUIData = new TotpMfaUIData();
+            OtpUri otpUri = await totpMfaUIData.GenerateTotpUri(accountId);
+            QRCodeGenerator qRCodeGenerator = new QRCodeGenerator();
+            QRCodeData qRCodeData = qRCodeGenerator.CreateQrCode(otpUri.ToString(), QRCodeGenerator.ECCLevel.Q);
+            Base64QRCode base64QRCode = new Base64QRCode(qRCodeData);
+            return base.GenerateResponse(("QRCode", base64QRCode.GetGraphic(10)));
+        }
+
+        /// <summary>
+        /// 驗證 OTP
+        /// </summary>
+        /// <param name="accountId">使用者 ID</param>
+        /// <param name="otp">OTP</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<HttpResponseMessage> ValidateTotp(Guid accountId, string otp) 
+        {
+            TotpMfaUIData totpMfaUIData = new TotpMfaUIData();
+            if (!await totpMfaUIData.VerifyTotpCode(accountId, otp)) 
+            {
+                return base.GenerateResponse("1003");
+            }
+
             return base.GenerateResponse();
         }
     }
